@@ -2,6 +2,8 @@
 
 One Paragraph of project description goes here
 
+Watch an agent that has been trained for approximately 20 iterations 650 iterations [here](https://youtu.be/khzMY8EACpQ).
+
 ## Prerequisites
 
 You will need to have a valid Python installation on your system. This has been tested with Python 3.6. It does not assume a particulay version of python, however, it makes no assertions of proper working, either on this version of Python, or on another. 
@@ -38,7 +40,27 @@ After you have generated the environment, activated it, and switched to the `src
 
 You will typically run the program by the following command `python projectNavigation.py`.
 
-Most of the essential parameters can be modified by changing the information within the `config.json` file. You can either train the model, or run the model. After the training is complete, this will generate a checkpoint file `src/models/checkpoint.pth`.
+Most of the essential parameters can be modified by changing the information within the `config.json` file. You can either train the model, or run the model. After the training is complete, this will generate a checkpoint file `src/models/checkpoint.pth`. 
+
+An example of training the model is shown below:
+
+```
++------------------------------
+| Training the agent ...
++------------------------------
+Episode 100 Average Score: 1.09
+Episode 200 Average Score: 3.94
+Episode 300 Average Score: 7.88
+Episode 400 Average Score: 10.43
+Episode 500 Average Score: 12.77
+Episode 600 Average Score: 13.57
+Episode 700 Average Score: 14.59
+Episode 726 Average Score: 15.00
+Environment solved in 626 episodes! Average Score: 15.00
+```
+
+It takes approximately 650 steps to reach an average score of 15.
+
 
 ## Authors
 
