@@ -116,7 +116,27 @@ A `soft_update` step updates the target network with the current dynamic weights
 A `step` method. At each step, this function adds relevant data into the replay buffer. After every `UPDATE_EVERY` step, this method will also call its own `learn` method to update the local Q-Network.
 
 
+### 4.4. The learning algorithm
+
+This is present within the `src/projectNavigation.py` file within the function `trainAgent` The algorithm may be briefly described as follows:
+
+1. Do the following for many episodes 
+2. restart the environment 
+3. Get the current state
+3. At each step:
+    3.1. get an action using an $\epsilon$-greedy policy
+    3.2. Use that action to go to the next state (and get the reward at the same time) 
+    3.3. Update the agent with this information (the agent adds this to its replay memory and may wish to update the local network/target network, depending upon the batch size etc.)
+    3.4. If it is done, break out of the current task
+4. If the current average score is greater than 15 stop training 
+5. Save the model.
+
 ## 5. Future Work
+
+The following might be added to improve the learning algorithm:
+
+1. priotirized experience replay
+2. Double DQN
 
 ## 6. Authors
 
