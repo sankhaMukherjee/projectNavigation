@@ -15,7 +15,7 @@ Since this work was initially done on a Mac, the `./p1_navigation` folder contai
  - [Win32](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
  - [Win64](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
 
-Install these in a convinient location within your folder structure, and use this file for the training etc.
+Install these in a convinient location within your folder structure, and use this file for the training etc. A configuration file `src/config.json` has a parameter `bananaFile` which you must change to point to the location of this file that you just downloaded.
 
 ## Installing
 
@@ -29,7 +29,7 @@ Install these in a convinient location within your folder structure, and use thi
 
 After you have generated the environment, activated it, and switched to the `src` folder, you will want to execute the program. The folder structure is shown below:
 
-```
+```bash
 .
 ├── config.json             # <- file containing configuration information
 ├── dqn_agent.py            # <- file containint the agent
@@ -38,13 +38,38 @@ After you have generated the environment, activated it, and switched to the `src
 └── projectNavigation.py    # <- main program that runs everything
 ```
 
-You will typically run the program by the following command `python projectNavigation.py`.
+You will typically run the program by the following command `python projectNavigation.py`. Most of the essential parameters can be modified by changing the information within the `config.json` file. The configuration file has several sections: 
 
-Most of the essential parameters can be modified by changing the information within the `config.json` file. You can either train the model, or run the model. After the training is complete, this will generate a checkpoint file `src/models/checkpoint.pth`. 
+ - `bananaFile`: This is the location of the Unity Environment that will allow you to explore the environment 
+ - `no_graphics`: Set this to `true` if you dont want to view the environment 
+ - `trainingParams`: hyperparameters that will be used for training 
+ - `training`: You will be able to configuration so that the program will train an agent 
+ - `run`: A trained agent will have the opportunity of running within this environment. 
+
+Several different types of operations that you can do is described below:
+
+### 1. Training the model
+
+For training the model, you would want to change the `["training"]["todo"]` parameter to `true`. It is possible that you may want to start from a pre-trained model. In that case, you should provide a path to an earlier model in the parameter `["training"]["startModel"]`.
+
+After the training is complete, this will generate a checkpoint file `src/models/checkpoint-[<date time string>].pth`. Thus, every time you train the model, a new file will be generated, and wont destroy models that had been trained earlier. 
+
+Before training, you may want to change the hyperparameters within the section `["trainingParams"]` in the configuration file. Available parameters, and their current values are shown:
+
+```python
+{
+    "n_episodes"  :  2000,   # <- number of episodes to run
+    "max_t"       :  1000,   # <- num of maximum iterations to go through in a single iteration
+    "eps_start"   :  1.0,    # <- starting value of epsilon (for epsilon greedy parameter)
+    "eps_end"     :  0.01,   # <- the minimum epsilon value to use
+    "eps_decay"   :  0.995   # <- The rate at which the epsilon will be multiplied to decrease the value of the current epsilon
+}
+```
 
 An example of training the model is shown below:
 
-```
+```bash
+
 +------------------------------
 | Training the agent ...
 +------------------------------
@@ -59,7 +84,9 @@ Episode 726 Average Score: 15.00
 Environment solved in 626 episodes! Average Score: 15.00
 ```
 
-It takes approximately 650 steps to reach an average score of 15.
+It takes approximately 650 steps to reach a moving-average score of 15.
+
+![training image](https://photos.google.com/album/AF1QipPyOVcmRPqi7P5GuooFigqpv5yHnJSWhwWXel27/photo/AF1QipNZf-T4gNFIznQIDX54wdHSVojkZxs8GFZcEi3N)
 
 
 ## Authors
