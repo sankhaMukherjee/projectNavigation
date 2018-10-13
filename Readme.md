@@ -86,7 +86,7 @@ Environment solved in 626 episodes! Average Score: 15.00
 
 It takes approximately 650 steps to reach a moving-average score of 15.
 
-![training image](https://photos.app.goo.gl/N1oTvdHGMAhptWnw5)
+![Imgur](https://i.imgur.com/gAq79Mc.png)
 
 
 ## Authors
