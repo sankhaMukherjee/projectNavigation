@@ -4,7 +4,7 @@ One Paragraph of project description goes here
 
 Watch an agent that has been trained for approximately 20 iterations 650 iterations [here](https://youtu.be/khzMY8EACpQ).
 
-## Prerequisites
+## 1. Prerequisites
 
 You will need to have a valid Python installation on your system. This has been tested with Python 3.6. It does not assume a particulay version of python, however, it makes no assertions of proper working, either on this version of Python, or on another. 
 
@@ -17,7 +17,7 @@ Since this work was initially done on a Mac, the `./p1_navigation` folder contai
 
 Install these in a convinient location within your folder structure, and use this file for the training etc. A configuration file `src/config.json` has a parameter `bananaFile` which you must change to point to the location of this file that you just downloaded.
 
-## Installing
+## 2. Installing
 
 1. Clone this repository to your computer, and create a virtual environment. Note that there is a `Makefile` at the base folder. You will want to run the command `make env` to generate the environment. Do this at the first time you are cloning the repo. The python environment is already copied from the deep reinforced learning repository, and is installed within your environment, when you generate the environment.
 
@@ -25,7 +25,7 @@ Install these in a convinient location within your folder structure, and use thi
 
 3. Change to the folder `src` for all other operations. There is a `Malefile` available within this folder as well. You can use the Makefile as is, or simply run the python files yourself.
 
-## Operation
+## 3. Operation
 
 After you have generated the environment, activated it, and switched to the `src` folder, you will want to execute the program. The folder structure is shown below:
 
@@ -48,7 +48,7 @@ You will typically run the program by the following command `python projectNavig
 
 Several different types of operations that you can do is described below:
 
-### 1. Training the model
+### 3.1. Training the model
 
 For training the model, you would want to change the `["training"]["todo"]` parameter to `true`. It is possible that you may want to start from a pre-trained model. In that case, you should provide a path to an earlier model in the parameter `["training"]["startModel"]`.
 
@@ -69,7 +69,6 @@ Before training, you may want to change the hyperparameters within the section `
 An example of training the model is shown below:
 
 ```bash
-
 +------------------------------
 | Training the agent ...
 +------------------------------
@@ -88,16 +87,46 @@ It takes approximately 650 steps to reach a moving-average score of 15.
 
 ![Imgur](https://i.imgur.com/gAq79Mc.png)
 
+### 3.2. Run the model 
 
-## Authors
+To run the model, you will need to change the  `["training"]["todo"]` parameter to `true` within the `src/config.json` file. For running the model, it is imperative that a model file be provided. This repo comes with several pre-trained model files in the `src/models` folder. If you want to see the program being evaluated, you should use the model `checkpoint-2018-10-13--15-18-43.pth` directly by setting the parameter `["run"]["startModel"]` in the configuration file. 
+
+## 4. Model Description
+
+A short description of the model will be provided here. The learning is done by an `Agent` (defined in `src/dqn_agent.py`). This agent uses a simple 3-layer neural network which acts as the `QNetwork` (defined in `src\model`). The agent employs a replay buffer `ReplayBuffer` (defined in `src/dqn_agent.py`). The function of each of these will be described in the following subsections, and finally, the learning algorithm will be described. 
+
+### 4.1. The `ReplayBuffer`
+
+This maintains a `deque` that continuously adds new experiences (i.e. a tuple containing the current state, the current action, the next state, the next action, the next reward, and whether we are done with the current episode). It has two methods. The first allows one to add experiences from this deque, and another that allows it to sample from it. 
+
+### 4.2. The `QNetwork`
+
+This is a simple 3-layer fully connected network. The input is the current state, and the output is a vector of the same size as the action space, and represents a Q value for each action. The first two layers have relu activation, while the last one is unactivated, which allows the last layer to have any real value. 
+
+### 4.3. The `Agent`
+
+The agent is composed of two Qnetworks (for a double DQN architecture), a replay buffer and an optimizer. We shall call the two QNetworks the local (dynamic Q Network) and the target (ideal Q network).
+
+An `act` method allows one to generate an action using an epsilon-greedy policy from the local network. 
+
+A `learn` method calculates the MSE error between the expected Q value `(reward + gamma * Q(next state, next action))` vs. the current calculated Q value, and updates the optimizer.
+
+A `soft_update` step updates the target network with the current dynamic weights.
+
+A `step` method. At each step, this function adds relevant data into the replay buffer. After every `UPDATE_EVERY` step, this method will also call its own `learn` method to update the local Q-Network.
+
+
+## 5. Future Work
+
+## 6. Authors
 
 Sankha S. Mukherjee - Initial work (2018)
 
-## License
+## 7. License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
 
-## Acknowledgments
+## 8. Acknowledgments
 
  - This repo contains a copy of the python environment available [here](https://github.com/udacity/deep-reinforcement-learning/tree/master/python). 
  - Two files [dqn_agent.py](https://raw.githubusercontent.com/udacity/deep-reinforcement-learning/master/dqn/exercise/dqn_agent.py) and [model.py](https://raw.githubusercontent.com/udacity/deep-reinforcement-learning/master/dqn/exercise/model.py) have been used with practically no modification.
