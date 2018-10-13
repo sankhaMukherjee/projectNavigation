@@ -1,8 +1,8 @@
 # projectNavigation
 
-One Paragraph of project description goes here
+This project is useful for training a deep Q network that learns to pick yellow bananas, and avoids purple bananas. 
 
-Watch an agent that has been trained for approximately 20 iterations 650 iterations [here](https://youtu.be/khzMY8EACpQ).
+Watch an agent that has been trained for approximately 650 iterations [here](https://youtu.be/khzMY8EACpQ).
 
 ## 1. Prerequisites
 
